@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resistance/tools.dart';
-import 'package:resistance/pages/part1-game-page.dart';
+import 'package:resistance/pages/discovery-phase-page.dart';
 
 class NewGamePage extends StatefulWidget {
   NewGamePage({Key key}) : super(key: key);
@@ -22,8 +22,16 @@ class _NewGamePageState extends State<NewGamePage> {
     switch (step) {
       case 1:
         bodyStep = <Widget>[
-          GamePage.buildTitle('Type de jeu?'),
+          GamePage.buildTitle('Type de jeu?                         '), // cheat to get full screen size
           addTypeGameButton(),
+          // new Row(
+          //   children: new Column(
+          //     children: <Widget>[
+          //       GamePage.buildTitle('Type de jeu?'),
+          //     addTypeGameButton(),
+          //     ],
+          //   ))
+          
         ];
         break;
       case 2:
@@ -38,7 +46,7 @@ class _NewGamePageState extends State<NewGamePage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        Part1GamePage(characters: this.rebuildCharacters(characters))),
+                        DiscoveryPhasePage(characters: this.rebuildCharacters(characters))),
               );
             },
           )
@@ -62,6 +70,7 @@ class _NewGamePageState extends State<NewGamePage> {
         elevation: GamePage.elevationButton,
         onPressed: () {
           setState(() {
+            GamePage.setLocaleStorageData('player-count', i);
             playerCount = i;
             step = 1;
           });
