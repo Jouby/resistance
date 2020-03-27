@@ -33,15 +33,8 @@ class _VoiceGenerateState extends State<VoiceGenerate> {
   initTts() {
     flutterTts = FlutterTts();
 
-    if (Platform.isAndroid) {
-      flutterTts.ttsInitHandler(() {
-        _getLanguages();
-        _getVoices();
-      });
-    } else if (Platform.isIOS) {
-      _getLanguages();
-      _getVoices();
-    }
+    _getLanguages();
+    _getVoices();
 
     flutterTts.setStartHandler(() {
       setState(() {

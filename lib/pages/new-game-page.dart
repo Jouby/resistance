@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:resistance/tools.dart';
-import 'package:resistance/pages/discovery-phase-page.dart';
+import 'package:the_dead_masked_company.resistance/tools.dart';
+import 'package:the_dead_masked_company.resistance/pages/discovery-phase-page.dart';
 
 class NewGamePage extends StatefulWidget {
   NewGamePage({Key key}) : super(key: key);

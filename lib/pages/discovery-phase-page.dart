@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:resistance/tools.dart';
-import 'package:resistance/elements/progressbar.dart';
-import 'package:resistance/pages/voice-phase-page.dart';
+import 'package:the_dead_masked_company.resistance/tools.dart';
+import 'package:the_dead_masked_company.resistance/elements/progressbar.dart';
+import 'package:the_dead_masked_company.resistance/pages/voice-phase-page.dart';
 import 'package:flutter/foundation.dart';
 
 class DiscoveryPhasePage extends StatefulWidget {

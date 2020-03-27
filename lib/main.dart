@@ -1,31 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:resistance/pages/home-page.dart';
+import 'package:the_dead_masked_company.resistance/pages/home-page.dart';
 import 'package:flutter/services.dart';
 
-void main()
-{
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]);
-
-  runApp(MyApp());
+  ]).then((_) {
+    runApp(MyApp());
+  });
 }
 
-class MyApp extends StatelessWidget
-{
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return MaterialApp(home: MyHome());
   }
 }
 
-class MyHome extends StatelessWidget
-{
+class MyHome extends StatelessWidget {
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Resistance',
       home: new HomePage(),

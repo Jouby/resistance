@@ -1,10 +1,40 @@
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
-import 'package:resistance/pages/home-page.dart';
+import 'package:the_dead_masked_company.resistance/pages/home-page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 abstract class GamePage extends StatelessWidget {
   static double elevationButton = 5.0;
+  static List<List<dynamic>> data;
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   GamePage.loadAsset();
+  // }
+
+  static loadAsset() async {
+    if (data == null) {
+      final myData = await rootBundle.loadString("assets/sales.csv");
+      List<List<dynamic>> csvTable = CsvToListConverter().convert(myData);
+      data = csvTable;
+    }
+  }
+
+  static String translate(String translateKey) {
+    loadAsset();
+
+    for (List<dynamic> line in data) {
+      String lineKey = line[0];
+      String lineTranslate = line[1];
+
+      if (lineKey == translateKey) {
+        return lineTranslate;
+      }
+    }
+
+    return translateKey;
+  }
 
   static Widget buildPage(BuildContext context, List<Widget> body,
       [MainAxisAlignment alignment = MainAxisAlignment.center]) {
@@ -87,30 +117,6 @@ abstract class GamePage extends StatelessWidget {
     return prefs.get(key) ?? (defaultValue) ?? 0;
   }
 
-  // static Map<String, int> getLocaleStorageDataMap(String key,
-  //     [dynamic defaultValue]) async {
-  //   final prefs = await SharedPreferences.getInstance();
-
-  //   dynamic value = prefs.get(key);
-
-  //   debugPrint('value');
-  //   debugPrint(value);
-  //   debugPrint(value.runtimeType.toString());
-  //   debugPrint('decode value');
-  //   debugPrint(jsonDecode('{"0": 0, "1": 0}').toString());
-  //   debugPrint(jsonDecode(value).toString());
-
-  //   Map<String, int> toto = Map<String, int>.from(json.decode(value));
-
-  //   return toto;
-  //   //return value != null ? json.decode(value) : (defaultValue) ?? '';
-  // }
-
-  // static void setLocaleStorageDataMap(String key, Object value) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   prefs.setString(key, json.encode(value));
-  // }
-
   static void setLocaleStorageData(String key, Object value) async {
     final prefs = await SharedPreferences.getInstance();
     switch (value.runtimeType) {
@@ -133,5 +139,10 @@ abstract class GamePage extends StatelessWidget {
         prefs.setString(key, value.toString());
         break;
     }
+  }
+
+  static void getTranslate() {
+    List<List<dynamic>> rowsAsListOfValues =
+        const CsvToListConverter().convert('lib/translate/fr_FR.csv');
   }
 }

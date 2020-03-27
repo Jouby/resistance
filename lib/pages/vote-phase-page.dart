@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:resistance/pages/mission-phase-page.dart';
-import 'package:resistance/tools.dart';
+import 'package:the_dead_masked_company.resistance/pages/mission-phase-page.dart';
+import 'package:the_dead_masked_company.resistance/tools.dart';
 
 class VotePhasePage extends StatefulWidget {
   final int failNumber;

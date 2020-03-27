@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:resistance/pages/vote-phase-page.dart';
-import 'package:resistance/tools.dart';
+import 'package:the_dead_masked_company.resistance/pages/vote-phase-page.dart';
+import 'package:the_dead_masked_company.resistance/tools.dart';
 
 class MissionPhasePage extends StatefulWidget {
   MissionPhasePage({Key key}) : super(key: key);

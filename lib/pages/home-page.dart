@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resistance/pages/new-game-page.dart';
+import 'package:the_dead_masked_company.resistance/pages/new-game-page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
