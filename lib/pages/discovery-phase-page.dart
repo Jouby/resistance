@@ -3,6 +3,7 @@ import 'package:the_dead_masked_company.resistance/tools.dart';
 import 'package:the_dead_masked_company.resistance/elements/progressbar.dart';
 import 'package:the_dead_masked_company.resistance/pages/voice-phase-page.dart';
 import 'package:flutter/foundation.dart';
+import 'package:the_dead_masked_company.resistance/tools/i18n.dart';
 
 class DiscoveryPhasePage extends StatefulWidget {
   final List<String> characters;
@@ -15,14 +16,13 @@ class DiscoveryPhasePage extends StatefulWidget {
 class _DiscoveryPhasePageState extends State<DiscoveryPhasePage> {
   int step = 1;
   int currentPlayer = 1;
-  int charactersCount = 0;
   List<String> characters = [];
 
   @override
   void initState() {
     super.initState();
-    this.charactersCount = widget.characters.length;
     this.characters = widget.characters;
+    // TODO Use shared preferences instead of pass argument by constructor
   }
 
   @override
@@ -31,21 +31,49 @@ class _DiscoveryPhasePageState extends State<DiscoveryPhasePage> {
 
     if (this.step == 1) {
       bodyStep = <Widget>[
-        GamePage.buildTitle('Passer le téléphone au JOUEUR $currentPlayer'),
+        new Container(
+          decoration:
+              new BoxDecoration(color: new Color.fromRGBO(255, 0, 0, 0.5)),
+          margin: const EdgeInsets.only(bottom: 10.0),
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: GamePage.buildTitle(
+                    'Passer le téléphone au JOUEUR $currentPlayer'),
+              ),
+            ],
+          ),
+        ),
         this.getNextButton(),
       ];
     } else {
-      String randomCharacter = (this.characters..shuffle()).first;
-      this.characters.remove(randomCharacter);
+      String randomCharacterCode = (this.characters..shuffle()).first;
+      String randomCharacter = (randomCharacterCode == 'resist')
+          ? I18n.of(context).resist
+          : I18n.of(context).spy;
+      this.characters.remove(randomCharacterCode);
 
       bodyStep = <Widget>[
-        GamePage.buildTitle(
-            'JOUEUR $currentPlayer, Vous êtes $randomCharacter'),
+        new Container(
+          decoration:
+              new BoxDecoration(color: new Color.fromRGBO(255, 0, 0, 0.5)),
+          margin: const EdgeInsets.only(bottom: 10.0),
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: GamePage.buildTitle(
+                    'JOUEUR $currentPlayer, Vous êtes $randomCharacter'),
+              ),
+            ],
+          ),
+        ),
         new Container(
           constraints: new BoxConstraints.expand(height: 100.0, width: 50.0),
           decoration: new BoxDecoration(
             image: new DecorationImage(
-              image: new AssetImage('assets/images/$randomCharacter.jpg'),
+              image: new AssetImage('assets/images/$randomCharacterCode.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -69,20 +97,24 @@ class _DiscoveryPhasePageState extends State<DiscoveryPhasePage> {
   }
 
   void goToNext() {
-    setState(() {
-      if (this.step == 2) {
-        this.currentPlayer++;
-        this.step = 1;
-      } else {
-        this.step++;
-      }
-
-      if (this.characters.length <= 0) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => VoicePhasePage(charactersCount: this.charactersCount)),
-        );
-      }
-    });
+    if (this.characters.length <= 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                VoicePhasePage(charactersCount: this.characters.length)),
+      );
+      this.step = 1;
+      this.currentPlayer = 1;
+    } else {
+      setState(() {
+        if (this.step == 2) {
+          this.currentPlayer++;
+          this.step = 1;
+        } else {
+          this.step++;
+        }
+      });
+    }
   }
 }

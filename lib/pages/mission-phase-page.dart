@@ -11,7 +11,7 @@ class MissionPhasePage extends StatefulWidget {
 
 class _MissionPhasePageState extends State<MissionPhasePage> {
   int missionNumber; // from locale storage
-  int rejectedCount = 0;
+  int rejectedCount = 5;
   int participantNumber;
   int failNumber;
   Map<String, int> missionResult = {"fail": 0, "success": 0};
@@ -32,7 +32,7 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
     if (missionData != null) {
       this.participantNumber = missionData['number'];
       this.failNumber = missionData['fail'];
-    }    
+    }
 
     setState(() {});
   }
@@ -56,14 +56,11 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
       return this.getStepWin(1);
     }
 
-    if (this.rejectedCount >= 5) {
+    if (this.rejectedCount <= 0) {
       return this.getStepWin(0);
     }
 
     bodyStep = <Widget>[
-      new Center(
-        child: GamePage.buildText('$rejectedCount'),
-      ),
       new Center(
           child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -95,32 +92,30 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
           GamePage.buildText(
               '2. Une fois l\'équipe composée, on passe à l\'étape des votes.'),
           GamePage.buildText('3. Résultats des votes :'),
-          new Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            new RaisedButton(
-              child: Text('EQUIPE REJETEE'),
-              color: Colors.red[700],
-              elevation: GamePage.elevationButton,
-              onPressed: () {
-                setState(() {
-                  this.rejectedCount++;
-                });
-              },
-            ),
-            new RaisedButton(
-              child: Text('EQUIPE ACCEPTEE'),
-              color: Colors.green[400],
-              elevation: GamePage.elevationButton,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => VotePhasePage(
-                          failNumber: this.failNumber,
-                          participantNumber: this.participantNumber)),
-                );
-              },
-            ),
-          ]),
+          new RaisedButton(
+            child: Text('EQUIPE ACCEPTEE'),
+            color: Colors.green[400],
+            elevation: GamePage.elevationButton,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => VotePhasePage(
+                        failNumber: this.failNumber,
+                        participantNumber: this.participantNumber)),
+              );
+            },
+          ),
+          new RaisedButton(
+            child: Text('EQUIPE REJETEE (plus que $rejectedCount)'),
+            color: Colors.red[700],
+            elevation: GamePage.elevationButton,
+            onPressed: () {
+              setState(() {
+                this.rejectedCount--;
+              });
+            },
+          ),
         ],
       )),
       new Row()

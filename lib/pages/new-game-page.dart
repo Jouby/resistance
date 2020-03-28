@@ -22,21 +22,39 @@ class _NewGamePageState extends State<NewGamePage> {
     switch (step) {
       case 1:
         bodyStep = <Widget>[
-          GamePage.buildTitle('Type de jeu?                         '), // cheat to get full screen size
+          new Container(
+            decoration:
+                new BoxDecoration(color: new Color.fromRGBO(255, 0, 0, 0.5)),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: GamePage.buildTitle(
+                      'Type de jeu?                         '), // cheat to get full screen size
+                ),
+              ],
+            ),
+          ),
           addTypeGameButton(),
-          // new Row(
-          //   children: new Column(
-          //     children: <Widget>[
-          //       GamePage.buildTitle('Type de jeu?'),
-          //     addTypeGameButton(),
-          //     ],
-          //   ))
-          
         ];
         break;
       case 2:
+      //TODO save characters in share preferences
+
         bodyStep = <Widget>[
-          GamePage.buildTitle('Sélectionner vos personnages'),
+          new Container(
+            decoration:
+                new BoxDecoration(color: new Color.fromRGBO(255, 0, 0, 0.5)),
+            margin: const EdgeInsets.only(bottom: 10.0),
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: GamePage.buildTitle('Sélectionner vos personnages'),
+                ),
+              ],
+            ),
+          ),
           addCharacterButton(),
           new RaisedButton(
             child: Text('START GAME'),
@@ -45,8 +63,8 @@ class _NewGamePageState extends State<NewGamePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        DiscoveryPhasePage(characters: this.rebuildCharacters(characters))),
+                    builder: (context) => DiscoveryPhasePage(
+                        characters: this.rebuildCharacters(characters))),
               );
             },
           )
@@ -54,7 +72,17 @@ class _NewGamePageState extends State<NewGamePage> {
         break;
       default:
         bodyStep = <Widget>[
-          GamePage.buildTitle('Combien de joueurs ?'),
+          new Container(
+            decoration:
+                new BoxDecoration(color: new Color.fromRGBO(255, 0, 0, 0.5)),
+            child: new Row(
+              children: <Widget>[
+                Expanded(
+                  child: GamePage.buildTitle('Combien de joueurs ?'),
+                ),
+              ],
+            ),
+          ),
           addNumberPlayerButton(),
         ];
     }
@@ -111,8 +139,6 @@ class _NewGamePageState extends State<NewGamePage> {
           padding: EdgeInsets.all(0.0),
           child: new Container(
             constraints: new BoxConstraints.expand(height: 100.0, width: 50.0),
-            // alignment: Alignment.bottomLeft,
-            // padding: new EdgeInsets.only(left: 16.0, bottom: 8.0),
             decoration: new BoxDecoration(
               image: new DecorationImage(
                 image: new AssetImage('assets/images/$i.jpg'),

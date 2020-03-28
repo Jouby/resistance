@@ -39,8 +39,20 @@ class _VoicePhasePageState extends State<VoicePhasePage> {
     flutterTts.setSpeechRate(0.8);
 
     bodyStep = <Widget>[
-      GamePage.buildText(
-          'Maintenant que tous les joueurs connaissent leurs rôles le jeu va pouvoir commencer. Mettez le son assez fort, posez le téléphone au centre et appuyez sur START.'),
+      new Container(
+        decoration:
+            new BoxDecoration(color: new Color.fromRGBO(255, 0, 0, 0.5)),
+        margin: const EdgeInsets.only(bottom: 10.0),
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: GamePage.buildText(
+                  'Maintenant que tous les joueurs connaissent leurs rôles le jeu va pouvoir commencer. Mettez le son assez fort, posez le téléphone au centre et appuyez sur START.'),
+            ),
+          ],
+        ),
+      ),
       new FlatButton.icon(
         onPressed: () {
           setState(() {
@@ -68,9 +80,7 @@ class _VoicePhasePageState extends State<VoicePhasePage> {
 
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => MissionPhasePage()
-            ),
+            MaterialPageRoute(builder: (context) => MissionPhasePage()),
           );
         },
       ));

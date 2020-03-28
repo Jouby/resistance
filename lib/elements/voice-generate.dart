@@ -124,19 +124,18 @@ class _VoiceGenerateState extends State<VoiceGenerate> {
   @override
   Widget build(BuildContext context) {
     this._speak();
-    return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text('Flutter TTS'),
-            ),
-            body: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(children: [
-                  inputSection(),
-                  btnSection(),
-                  languages != null ? languageDropDownSection() : Text(""),
-                  voices != null ? voiceDropDownSection() : Text("")
-                ]))));
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Flutter TTS'),
+        ),
+        body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(children: [
+              inputSection(),
+              btnSection(),
+              languages != null ? languageDropDownSection() : Text(""),
+              voices != null ? voiceDropDownSection() : Text("")
+            ])));
   }
 
   Widget inputSection() => Container(

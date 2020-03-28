@@ -11,37 +11,46 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/home.jpg"),
-              fit: BoxFit.cover,
-            ),
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/home.jpg"),
+            fit: BoxFit.cover,
           ),
-          child: new Align(
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Text(
-                  'RESISTANCE',
-                  //style: Theme.of(context).textTheme.display1,
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40.0)
-                ),
-                new RaisedButton(
-                  child: Text("Nouvelle partie"),
-                  elevation: 5.0,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => NewGamePage()),
-                    );
-                  },
-                ),
-              ]
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Container(
+              decoration:
+                  new BoxDecoration(color: new Color.fromRGBO(255, 0, 0, 0.5)),
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Text('RESISTANCE',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40.0))
+                ],
+              ),
             ),
-          ),
+            new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new RaisedButton(
+                    child: Text("Nouvelle partie"),
+                    elevation: 5.0,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NewGamePage()),
+                      );
+                    },
+                  ),
+                ])
+          ],
         ),
       ),
     );

@@ -2,80 +2,40 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:the_dead_masked_company.resistance/pages/home-page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 abstract class GamePage extends StatelessWidget {
   static double elevationButton = 5.0;
   static List<List<dynamic>> data;
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   GamePage.loadAsset();
-  // }
-
-  static loadAsset() async {
-    if (data == null) {
-      final myData = await rootBundle.loadString("assets/sales.csv");
-      List<List<dynamic>> csvTable = CsvToListConverter().convert(myData);
-      data = csvTable;
-    }
-  }
-
-  static String translate(String translateKey) {
-    loadAsset();
-
-    for (List<dynamic> line in data) {
-      String lineKey = line[0];
-      String lineTranslate = line[1];
-
-      if (lineKey == translateKey) {
-        return lineTranslate;
-      }
-    }
-
-    return translateKey;
-  }
-
   static Widget buildPage(BuildContext context, List<Widget> body,
       [MainAxisAlignment alignment = MainAxisAlignment.center]) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Align(
-              child: new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              new FlatButton.icon(
+    return Scaffold(
+      appBar: AppBar(
+        title: Align(
+            child: new Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            new FlatButton.icon(
                 onPressed: () {
-                  Navigator.pop(context);
+                  goBackHome(context);
                 },
-                icon: Icon(Icons.keyboard_backspace, color: Colors.white),
-                label: Text("Back",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w900)),
-              ),
-              new FlatButton.icon(
-                  onPressed: () {
-                    goBackHome(context);
-                  },
-                  icon: Icon(Icons.home, color: Colors.white),
-                  label: new Text('')),
-            ],
-          )),
-          backgroundColor: Colors.black,
-        ),
-        body: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/home.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: new Column(
-              mainAxisAlignment: alignment,
-              children: body,
-            )),
+                icon: Icon(Icons.home, color: Colors.white),
+                label: new Text('')),
+          ],
+        )),
+        backgroundColor: Colors.black,
       ),
+      body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/home.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: body,
+          )),
     );
   }
 
@@ -98,7 +58,7 @@ abstract class GamePage extends StatelessWidget {
   static Text buildText(text) {
     return new Text(
       text,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.white, fontSize: 20.0),
       textAlign: TextAlign.center,
     );
   }
