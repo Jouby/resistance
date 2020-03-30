@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_dead_masked_company.resistance/pages/vote-phase-page.dart';
-import 'package:the_dead_masked_company.resistance/tools.dart';
+import 'package:the_dead_masked_company.resistance/tools/local-storage-manager.dart';
+import 'package:the_dead_masked_company.resistance/tools/page-builder.dart';
 
 class MissionPhasePage extends StatefulWidget {
   MissionPhasePage({Key key}) : super(key: key);
@@ -20,11 +21,11 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
   int totalSuccess = 0;
 
   void getLocaleStorageData() async {
-    this.missionNumber = await GamePage.getLocaleStorageData('mission-number');
-    int playerCount = await GamePage.getLocaleStorageData('player-count');
-    this.totalFail = await GamePage.getLocaleStorageData('mission-result-fail');
+    this.missionNumber = await LocalStorageManager.getLocaleStorageData('mission-number');
+    int playerCount = await LocalStorageManager.getLocaleStorageData('player-count');
+    this.totalFail = await LocalStorageManager.getLocaleStorageData('mission-result-fail');
     this.totalSuccess =
-        await GamePage.getLocaleStorageData('mission-result-success');
+        await LocalStorageManager.getLocaleStorageData('mission-result-success');
 
     debugPrint('playerCount' + playerCount.toString());
     Map<String, int> missionData = this.getMissionsData(playerCount);
@@ -65,7 +66,7 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
           child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          GamePage.buildTitle('MISSION $missionNumber'),
+          PageBuilder.buildTitle('MISSION $missionNumber'),
           Container(
             color: Colors.red[700],
             child:
@@ -73,14 +74,14 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
               new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  GamePage.buildText('$participantNumber'),
+                  PageBuilder.buildText('$participantNumber'),
                   new Icon(Icons.supervisor_account, color: Colors.white),
                 ],
               ),
               new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  GamePage.buildText('$failNumber'),
+                  PageBuilder.buildText('$failNumber'),
                   new Icon(Icons.warning, color: Colors.white),
                 ],
               ),
@@ -88,14 +89,14 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
           ),
 
           //TODO play a card ??
-          GamePage.buildText('1. Le meneur constitue une équipe'),
-          GamePage.buildText(
+          PageBuilder.buildText('1. Le meneur constitue une équipe'),
+          PageBuilder.buildText(
               '2. Une fois l\'équipe composée, on passe à l\'étape des votes.'),
-          GamePage.buildText('3. Résultats des votes :'),
+          PageBuilder.buildText('3. Résultats des votes :'),
           new RaisedButton(
             child: Text('EQUIPE ACCEPTEE'),
             color: Colors.green[400],
-            elevation: GamePage.elevationButton,
+            elevation: PageBuilder.elevationButton,
             onPressed: () {
               Navigator.push(
                 context,
@@ -109,7 +110,7 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
           new RaisedButton(
             child: Text('EQUIPE REJETEE (plus que $rejectedCount)'),
             color: Colors.red[700],
-            elevation: GamePage.elevationButton,
+            elevation: PageBuilder.elevationButton,
             onPressed: () {
               setState(() {
                 this.rejectedCount--;
@@ -121,7 +122,7 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
       new Row()
     ];
 
-    return GamePage.buildPage(
+    return PageBuilder.buildPage(
         context, bodyStep, MainAxisAlignment.spaceBetween);
   }
 
@@ -135,17 +136,17 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
     }
 
     List<Widget> bodyStep = <Widget>[
-      GamePage.buildTitle(text),
+      PageBuilder.buildTitle(text),
       new RaisedButton(
         child: Text('Retour au menu principal'),
-        elevation: GamePage.elevationButton,
+        elevation: PageBuilder.elevationButton,
         onPressed: () {
-          GamePage.goBackHome(context);
+          PageBuilder.goBackHome(context);
         },
       ),
     ];
 
-    return GamePage.buildPage(context, bodyStep);
+    return PageBuilder.buildPage(context, bodyStep);
   }
 
   Map<String, int> getMissionsData(int playerCount) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:the_dead_masked_company.resistance/tools.dart';
 import 'package:the_dead_masked_company.resistance/pages/discovery-phase-page.dart';
+import 'package:the_dead_masked_company.resistance/tools/local-storage-manager.dart';
+import 'package:the_dead_masked_company.resistance/tools/page-builder.dart';
 
 class NewGamePage extends StatefulWidget {
   NewGamePage({Key key}) : super(key: key);
@@ -29,7 +30,7 @@ class _NewGamePageState extends State<NewGamePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                  child: GamePage.buildTitle(
+                  child: PageBuilder.buildTitle(
                       'Type de jeu?                         '), // cheat to get full screen size
                 ),
               ],
@@ -50,7 +51,7 @@ class _NewGamePageState extends State<NewGamePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                  child: GamePage.buildTitle('Sélectionner vos personnages'),
+                  child: PageBuilder.buildTitle('Sélectionner vos personnages'),
                 ),
               ],
             ),
@@ -58,7 +59,7 @@ class _NewGamePageState extends State<NewGamePage> {
           addCharacterButton(),
           new RaisedButton(
             child: Text('START GAME'),
-            elevation: GamePage.elevationButton,
+            elevation: PageBuilder.elevationButton,
             onPressed: () {
               Navigator.push(
                 context,
@@ -78,7 +79,7 @@ class _NewGamePageState extends State<NewGamePage> {
             child: new Row(
               children: <Widget>[
                 Expanded(
-                  child: GamePage.buildTitle('Combien de joueurs ?'),
+                  child: PageBuilder.buildTitle('Combien de joueurs ?'),
                 ),
               ],
             ),
@@ -87,7 +88,7 @@ class _NewGamePageState extends State<NewGamePage> {
         ];
     }
 
-    return GamePage.buildPage(context, bodyStep);
+    return PageBuilder.buildPage(context, bodyStep);
   }
 
   Widget addNumberPlayerButton() {
@@ -95,10 +96,10 @@ class _NewGamePageState extends State<NewGamePage> {
     for (var i = 5; i <= 10; i++) {
       list.add(new RaisedButton(
         child: Text(i.toString()),
-        elevation: GamePage.elevationButton,
+        elevation: PageBuilder.elevationButton,
         onPressed: () {
           setState(() {
-            GamePage.setLocaleStorageData('player-count', i);
+            LocalStorageManager.setLocaleStorageData('player-count', i);
             playerCount = i;
             step = 1;
           });
@@ -106,7 +107,7 @@ class _NewGamePageState extends State<NewGamePage> {
       ));
     }
 
-    return GamePage.getButtonList(list);
+    return PageBuilder.getButtonList(list);
   }
 
   Widget addTypeGameButton() {
@@ -115,7 +116,7 @@ class _NewGamePageState extends State<NewGamePage> {
     for (var i in ['CLASSIQUE']) {
       list.add(new RaisedButton(
         child: Text(i),
-        elevation: GamePage.elevationButton,
+        elevation: PageBuilder.elevationButton,
         onPressed: () {
           setState(() {
             gameType = i;
@@ -127,7 +128,7 @@ class _NewGamePageState extends State<NewGamePage> {
       ));
     }
 
-    return GamePage.getButtonList(list);
+    return PageBuilder.getButtonList(list);
   }
 
   Widget addCharacterButton() {
@@ -151,7 +152,7 @@ class _NewGamePageState extends State<NewGamePage> {
                 )),
           )));
     }
-    return GamePage.getButtonList(list);
+    return PageBuilder.getButtonList(list);
   }
 
   void calculateCharacters() {

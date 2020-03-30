@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_dead_masked_company.resistance/pages/mission-phase-page.dart';
-import 'package:the_dead_masked_company.resistance/tools.dart';
+import 'package:the_dead_masked_company.resistance/tools/local-storage-manager.dart';
+import 'package:the_dead_masked_company.resistance/tools/page-builder.dart';
 
 class VotePhasePage extends StatefulWidget {
   final int failNumber;
@@ -35,7 +36,7 @@ class _VotePhasePageState extends State<VotePhasePage> {
   }
 
   void getLocaleStorageData() async {
-    this.missionNumber = await GamePage.getLocaleStorageData('mission-number');
+    this.missionNumber = await LocalStorageManager.getLocaleStorageData('mission-number');
     setState(() {});
   }
 
@@ -49,16 +50,16 @@ class _VotePhasePageState extends State<VotePhasePage> {
       key = 'mission-result-success';
     }
 
-    int value = await GamePage.getLocaleStorageData(key);
-    GamePage.setLocaleStorageData(key, value + 1);
+    int value = await LocalStorageManager.getLocaleStorageData(key);
+    LocalStorageManager.setLocaleStorageData(key, value + 1);
 
     int test = value + 1;
     debugPrint('save mission result');
     debugPrint(test.toString());
 
     int missionNumber =
-        await GamePage.getLocaleStorageData('mission-number', 1);
-    GamePage.setLocaleStorageData('mission-number', missionNumber + 1);
+        await LocalStorageManager.getLocaleStorageData('mission-number', 1);
+    LocalStorageManager.setLocaleStorageData('mission-number', missionNumber + 1);
   }
 
   @override
@@ -70,13 +71,13 @@ class _VotePhasePageState extends State<VotePhasePage> {
       int success = this.result[1];
 
       bodyStep = <Widget>[
-        GamePage.buildTitle('RESULTAT DE LA MISSION $missionNumber'),
+        PageBuilder.buildTitle('RESULTAT DE LA MISSION $missionNumber'),
       ];
 
       if (this.step == 1) {
         bodyStep.add(new RaisedButton(
           child: Text('VOIR LES RESULTATS'),
-          elevation: GamePage.elevationButton,
+          elevation: PageBuilder.elevationButton,
           onPressed: () {
             this.goToNext();
           },
@@ -89,14 +90,14 @@ class _VotePhasePageState extends State<VotePhasePage> {
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                GamePage.buildText('$success'),
+                PageBuilder.buildText('$success'),
                 new Icon(Icons.check, color: Colors.white),
               ],
             ),
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                GamePage.buildText('$fail'),
+                PageBuilder.buildText('$fail'),
                 new Icon(Icons.clear, color: Colors.white),
               ],
             ),
@@ -105,7 +106,7 @@ class _VotePhasePageState extends State<VotePhasePage> {
 
         bodyStep.add(new RaisedButton(
           child: Text('SUIVANT'),
-          elevation: GamePage.elevationButton,
+          elevation: PageBuilder.elevationButton,
           onPressed: () {
             Navigator.push(
               context,
@@ -116,18 +117,18 @@ class _VotePhasePageState extends State<VotePhasePage> {
       }
     } else if (this.step == 1) {
       bodyStep = <Widget>[
-        GamePage.buildTitle(
+        PageBuilder.buildTitle(
             'Passer le téléphone au PARTICIPANT $currentPlayer'),
         this.getNextButton(),
       ];
     } else {
       bodyStep = <Widget>[
-        GamePage.buildTitle('PARTICIPANT $currentPlayer'),
+        PageBuilder.buildTitle('PARTICIPANT $currentPlayer'),
         new Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           new RaisedButton(
             child: Text('ECHEC'),
             color: Colors.red[700],
-            elevation: GamePage.elevationButton,
+            elevation: PageBuilder.elevationButton,
             onPressed: () {
               this.vote(0);
             },
@@ -135,7 +136,7 @@ class _VotePhasePageState extends State<VotePhasePage> {
           new RaisedButton(
             child: Text('REUSSITE'),
             color: Colors.green[400],
-            elevation: GamePage.elevationButton,
+            elevation: PageBuilder.elevationButton,
             onPressed: () {
               this.vote(1);
             },
@@ -144,7 +145,7 @@ class _VotePhasePageState extends State<VotePhasePage> {
       ];
     }
 
-    return GamePage.buildPage(context, bodyStep);
+    return PageBuilder.buildPage(context, bodyStep);
   }
 
   void vote(int vote) {
@@ -162,7 +163,7 @@ class _VotePhasePageState extends State<VotePhasePage> {
   RaisedButton getNextButton() {
     return new RaisedButton(
       child: Text('SUIVANT'),
-      elevation: GamePage.elevationButton,
+      elevation: PageBuilder.elevationButton,
       onPressed: () {
         this.goToNext();
       },

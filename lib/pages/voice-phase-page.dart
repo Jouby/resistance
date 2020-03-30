@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:the_dead_masked_company.resistance/pages/mission-phase-page.dart';
-import 'package:the_dead_masked_company.resistance/tools.dart';
+import 'package:the_dead_masked_company.resistance/tools/local-storage-manager.dart';
+import 'package:the_dead_masked_company.resistance/tools/page-builder.dart';
 
 enum TtsState { playing, stopped }
 
@@ -47,7 +48,7 @@ class _VoicePhasePageState extends State<VoicePhasePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: GamePage.buildText(
+              child: PageBuilder.buildText(
                   'Maintenant que tous les joueurs connaissent leurs rôles le jeu va pouvoir commencer. Mettez le son assez fort, posez le téléphone au centre et appuyez sur START.'),
             ),
           ],
@@ -72,11 +73,11 @@ class _VoicePhasePageState extends State<VoicePhasePage> {
     if (this.showNextButton) {
       bodyStep.add(new RaisedButton(
         child: Text('NEXT'),
-        elevation: GamePage.elevationButton,
+        elevation: PageBuilder.elevationButton,
         onPressed: () {
-          GamePage.setLocaleStorageData('mission-number', 1);
-          GamePage.setLocaleStorageData('mission-result-fail', 0);
-          GamePage.setLocaleStorageData('mission-result-success', 0);
+          LocalStorageManager.setLocaleStorageData('mission-number', 1);
+          LocalStorageManager.setLocaleStorageData('mission-result-fail', 0);
+          LocalStorageManager.setLocaleStorageData('mission-result-success', 0);
 
           Navigator.push(
             context,
@@ -86,6 +87,6 @@ class _VoicePhasePageState extends State<VoicePhasePage> {
       ));
     }
 
-    return GamePage.buildPage(context, bodyStep);
+    return PageBuilder.buildPage(context, bodyStep);
   }
 }

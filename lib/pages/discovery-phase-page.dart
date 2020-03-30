@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:the_dead_masked_company.resistance/tools.dart';
 import 'package:the_dead_masked_company.resistance/elements/progressbar.dart';
 import 'package:the_dead_masked_company.resistance/pages/voice-phase-page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:the_dead_masked_company.resistance/tools/i18n.dart';
+import 'package:the_dead_masked_company.resistance/tools/page-builder.dart';
 
 class DiscoveryPhasePage extends StatefulWidget {
   final List<String> characters;
@@ -39,7 +39,7 @@ class _DiscoveryPhasePageState extends State<DiscoveryPhasePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Expanded(
-                child: GamePage.buildTitle(
+                child: PageBuilder.buildTitle(
                     'Passer le téléphone au JOUEUR $currentPlayer'),
               ),
             ],
@@ -63,7 +63,7 @@ class _DiscoveryPhasePageState extends State<DiscoveryPhasePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Expanded(
-                child: GamePage.buildTitle(
+                child: PageBuilder.buildTitle(
                     'JOUEUR $currentPlayer, Vous êtes $randomCharacter'),
               ),
             ],
@@ -83,13 +83,13 @@ class _DiscoveryPhasePageState extends State<DiscoveryPhasePage> {
       ];
     }
 
-    return GamePage.buildPage(context, bodyStep);
+    return PageBuilder.buildPage(context, bodyStep);
   }
 
   RaisedButton getNextButton() {
     return new RaisedButton(
       child: Text('SUIVANT'),
-      elevation: GamePage.elevationButton,
+      elevation: PageBuilder.elevationButton,
       onPressed: () {
         this.goToNext();
       },

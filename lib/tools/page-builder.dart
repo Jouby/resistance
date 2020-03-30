@@ -1,11 +1,8 @@
-import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:the_dead_masked_company.resistance/pages/home-page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class GamePage extends StatelessWidget {
+abstract class PageBuilder extends StatelessWidget {
   static double elevationButton = 5.0;
-  static List<List<dynamic>> data;
 
   static Widget buildPage(BuildContext context, List<Widget> body,
       [MainAxisAlignment alignment = MainAxisAlignment.center]) {
@@ -69,40 +66,5 @@ abstract class GamePage extends StatelessWidget {
         runSpacing: 4.0, // gap between lines
         direction: Axis.horizontal, // main axis (rows or columns)
         children: list);
-  }
-
-  static Future<dynamic> getLocaleStorageData(String key,
-      [dynamic defaultValue]) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.get(key) ?? (defaultValue) ?? 0;
-  }
-
-  static void setLocaleStorageData(String key, Object value) async {
-    final prefs = await SharedPreferences.getInstance();
-    switch (value.runtimeType) {
-      case int:
-        prefs.setInt(key, value);
-        break;
-      case String:
-        prefs.setString(key, value);
-        break;
-      case bool:
-        prefs.setBool(key, value);
-        break;
-      case double:
-        prefs.setDouble(key, value);
-        break;
-      case List:
-        prefs.setStringList(key, value);
-        break;
-      default:
-        prefs.setString(key, value.toString());
-        break;
-    }
-  }
-
-  static void getTranslate() {
-    List<List<dynamic>> rowsAsListOfValues =
-        const CsvToListConverter().convert('lib/translate/fr_FR.csv');
   }
 }
