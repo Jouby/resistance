@@ -25,16 +25,73 @@ class _HomePageState extends State<HomePage> {
             new Container(
               decoration:
                   new BoxDecoration(color: new Color.fromRGBO(255, 0, 0, 0.5)),
-              child: new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Text('RESISTANCE',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40.0))
-                ],
-              ),
+                  margin: const EdgeInsets.only(bottom: 5.0),
+              child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: <
+                        Widget>[
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 10.0, right: 15.0, bottom: 5.0),
+                            child: Divider(
+                              color: Colors.white,
+                              height: 30,
+                            )),
+                      ),
+                      Text("THE",
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 20.0)),
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 15.0, right: 10.0, bottom: 5.0),
+                            child: Divider(
+                              color: Colors.white,
+                              height: 30,
+                            )),
+                      ),
+                    ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('RESISTANCE',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40.0))
+                      ],
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: <
+                        Widget>[
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 10.0, right: 15.0),
+                            padding:
+                                const EdgeInsets.only(top: 5.0),
+                            child: Divider(
+                              color: Colors.white,
+                              height: 30,
+                            )),
+                      ),
+                      Text("★★★★★",
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 20.0)),
+                      Expanded(
+                        child: new Container(
+                            margin:
+                                const EdgeInsets.only(left: 15.0, right: 10.0),
+                            padding:
+                                const EdgeInsets.only(top: 5.0),
+                            child: Divider(
+                              color: Colors.white,
+                              height: 30,
+                            )),
+                      ),
+                    ]),
+                  ]),
             ),
             new Row(
                 mainAxisAlignment: MainAxisAlignment.center,

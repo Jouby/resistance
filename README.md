@@ -13,3 +13,7 @@ To build the app, run the following command:
 To build i18n packages, update `assets/translate.csv` and run the following command:
 
 ```flutter pub run flappy_translator```
+
+## Credits
+
+- [Hage](https://twitter.com/hage_2013) for background image
