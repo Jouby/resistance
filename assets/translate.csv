@@ -1,3 +1,5 @@
 keys,fr
 resist,Résistant
+resist_desc,"Résistant: Vous devez trouver les espions qui se cache par les résistants et faire réussir les missions."
 spy,Espion
+spy_desc,"Espion: Vous devez faire passer pour un résistant et faire échouer les missions."

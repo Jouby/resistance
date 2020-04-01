@@ -48,10 +48,13 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Raleway-Regular
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito-Regular.ttf
+    - family: Raleway
       fonts:
         - asset: fonts/Raleway-Regular.ttf
-
+    
 flappy_translator:
   input_file_path: "assets/translate.csv"
   output_dir: "lib/tools"

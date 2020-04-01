@@ -145,7 +145,7 @@ class _VotePhasePageState extends State<VotePhasePage> {
       ];
     }
 
-    return PageBuilder.buildPage(context, bodyStep);
+    return PageBuilder.buildPage(context, bodyStep, 'mission.jpg');
   }
 
   void vote(int vote) {

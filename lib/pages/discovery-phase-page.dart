@@ -69,13 +69,12 @@ class _DiscoveryPhasePageState extends State<DiscoveryPhasePage> {
             ],
           ),
         ),
-        new Container(
-          constraints: new BoxConstraints.expand(height: 100.0, width: 50.0),
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-              image: new AssetImage('assets/images/$randomCharacterCode.jpg'),
-              fit: BoxFit.cover,
-            ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Image.asset(
+            'assets/images/card_$randomCharacterCode.jpg',
+            height: 110.0,
+            fit: BoxFit.fill,
           ),
         ),
         this.getNextButton(),

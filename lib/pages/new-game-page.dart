@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_dead_masked_company.resistance/pages/discovery-phase-page.dart';
+import 'package:the_dead_masked_company.resistance/tools/i18n.dart';
 import 'package:the_dead_masked_company.resistance/tools/local-storage-manager.dart';
 import 'package:the_dead_masked_company.resistance/tools/page-builder.dart';
 
@@ -31,7 +32,7 @@ class _NewGamePageState extends State<NewGamePage> {
               children: <Widget>[
                 Expanded(
                   child: PageBuilder.buildTitle(
-                      'Type de jeu?                         '), // cheat to get full screen size
+                      'Type de jeu                         '), // cheat to get full screen size
                 ),
               ],
             ),
@@ -40,7 +41,7 @@ class _NewGamePageState extends State<NewGamePage> {
         ];
         break;
       case 2:
-      //TODO save characters in share preferences
+        //TODO save characters in share preferences
 
         bodyStep = <Widget>[
           new Container(
@@ -51,14 +52,14 @@ class _NewGamePageState extends State<NewGamePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                  child: PageBuilder.buildTitle('Sélectionner vos personnages'),
+                  child: PageBuilder.buildTitle('Sélection des personnages'),
                 ),
               ],
             ),
           ),
           addCharacterButton(),
           new RaisedButton(
-            child: Text('START GAME'),
+            child: Text('JOUER'),
             elevation: PageBuilder.elevationButton,
             onPressed: () {
               Navigator.push(
@@ -79,7 +80,7 @@ class _NewGamePageState extends State<NewGamePage> {
             child: new Row(
               children: <Widget>[
                 Expanded(
-                  child: PageBuilder.buildTitle('Combien de joueurs ?'),
+                  child: PageBuilder.buildTitle('Nombre de joueurs'),
                 ),
               ],
             ),
@@ -132,25 +133,39 @@ class _NewGamePageState extends State<NewGamePage> {
   }
 
   Widget addCharacterButton() {
-    List<FlatButton> list = new List<FlatButton>();
+    List<Row> list = new List<Row>();
 
     for (var i in ['resist', 'spy']) {
-      list.add(new FlatButton(
-          onPressed: () {},
-          padding: EdgeInsets.all(0.0),
-          child: new Container(
-            constraints: new BoxConstraints.expand(height: 100.0, width: 50.0),
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage('assets/images/$i.jpg'),
-                fit: BoxFit.cover,
+      list.add(Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Tooltip(message: (i == 'resist') ? I18n.of(context).resist_desc : I18n.of(context).spy_desc, child:
+              FlatButton(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.asset(
+                    'assets/images/card_$i.jpg',
+                    height: 110.0,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                onPressed: () {},
               ),
-            ),
-            child: new Text(characters[i].toString(),
-                style: new TextStyle(
-                  color: Colors.white,
-                )),
-          )));
+              ),
+              Center(
+                child: Text(characters[i].toString(),
+                    style: new TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold)),
+              ),
+              // new Tooltip(message: "Hello World", child: new Text("foo"))
+            ],
+          )
+        ],
+      ));
     }
     return PageBuilder.getButtonList(list);
   }

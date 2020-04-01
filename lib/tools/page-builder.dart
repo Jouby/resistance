@@ -5,8 +5,10 @@ abstract class PageBuilder extends StatelessWidget {
   static double elevationButton = 5.0;
 
   static Widget buildPage(BuildContext context, List<Widget> body,
-      [MainAxisAlignment alignment = MainAxisAlignment.center]) {
+      [String image = 'briefing.jpg',
+      MainAxisAlignment alignment = MainAxisAlignment.center]) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Align(
             child: new Row(
@@ -20,19 +22,20 @@ abstract class PageBuilder extends StatelessWidget {
                 label: new Text('')),
           ],
         )),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.black45,
       ),
       body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/home.jpg"),
+              image: AssetImage("assets/images/$image"),
               fit: BoxFit.cover,
             ),
           ),
-          child: new Column(
+          child: SafeArea(
+              child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: body,
-          )),
+          ))),
     );
   }
 
@@ -46,8 +49,8 @@ abstract class PageBuilder extends StatelessWidget {
   static Text buildTitle(text) {
     return new Text(
       text,
-      style: TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40.0),
+      style:
+          TextStyle(color: Colors.white, fontSize: 40.0, fontFamily: 'Nunito'),
       textAlign: TextAlign.center,
     );
   }

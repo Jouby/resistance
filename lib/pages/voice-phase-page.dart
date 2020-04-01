@@ -54,7 +54,10 @@ class _VoicePhasePageState extends State<VoicePhasePage> {
           ],
         ),
       ),
-      new FlatButton.icon(
+      new RaisedButton.icon(
+        label: Text('$textButton'),
+        icon: Icon(this.icon, color: Colors.black),
+        elevation: PageBuilder.elevationButton,
         onPressed: () {
           setState(() {
             _speak(
@@ -64,10 +67,7 @@ class _VoicePhasePageState extends State<VoicePhasePage> {
             this.icon = Icons.fast_rewind;
           });
         },
-        icon: Icon(this.icon, color: Colors.white),
-        label: Text('$textButton',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900)),
-      ),
+      )
     ];
 
     if (this.showNextButton) {

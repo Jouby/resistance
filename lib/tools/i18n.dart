@@ -7,13 +7,21 @@ import 'package:flutter/material.dart';
 class I18n {
   String get resist => _getText("resist");
 
+  String get resist_desc => _getText("resist_desc");
+
   String get spy => _getText("spy");
+
+  String get spy_desc => _getText("spy_desc");
 
   static Map<String, String> _localizedValues;
 
   static Map<String, String> _frValues = {
     "resist": "Résistant",
+    "resist_desc":
+        "Résistant: Vous devez trouver les espions qui se cache par les résistants et faire réussir les missions",
     "spy": "Espion",
+    "spy_desc":
+        "Espion: Vous devez faire passer pour un résistant et faire échouer les missions",
   };
 
   static Map<String, Map<String, String>> _allValues = {

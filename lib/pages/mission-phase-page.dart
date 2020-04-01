@@ -123,7 +123,7 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
     ];
 
     return PageBuilder.buildPage(
-        context, bodyStep, MainAxisAlignment.spaceBetween);
+        context, bodyStep, 'mission.jpg', MainAxisAlignment.spaceBetween);
   }
 
   Widget getStepWin(int winSide) {

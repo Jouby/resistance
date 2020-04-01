@@ -18,9 +18,10 @@ void main() {
 class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ImageCache().clear();
     return MaterialApp(
       title: 'Resistance',
-      theme: ThemeData(fontFamily: 'Raleway-Regular'),
+      theme: ThemeData(fontFamily: 'Raleway'),
       localizationsDelegates: [
         const I18nDelegate(),
         GlobalMaterialLocalizations.delegate,
