@@ -17,3 +17,6 @@ To build i18n packages, update `assets/translate.csv` and run the following comm
 ## Credits
 
 - [Hage](https://twitter.com/hage_2013) for background image
+
+https://www.artstation.com/artwork/rBBGe
+https://www.artstation.com/artwork/D2WnR

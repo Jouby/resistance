@@ -20,6 +20,7 @@ class VotePhasePage extends StatefulWidget {
 class _VotePhasePageState extends State<VotePhasePage> {
   int currentPlayer = 1;
   int participantNumber;
+  List<String> missions;
   int missionNumber;
   int step = 1;
   Map<int, int> result;
@@ -36,30 +37,16 @@ class _VotePhasePageState extends State<VotePhasePage> {
   }
 
   void getLocaleStorageData() async {
-    this.missionNumber = await LocalStorageManager.getLocaleStorageData('mission-number');
-    setState(() {});
+    this.missions =
+        await LocalStorageManager.getListLocaleStorageData('missions');
+    setState(() {
+      this.missionNumber = missions.length + 1;
+    });
   }
 
   void saveMissionResult() async {
-    // var failureList =
-    //     this.result.where((participantResult) => participantResult == 0);
-    String key;
-    if (this.result[0] >= widget.failNumber) {
-      key = 'mission-result-fail';
-    } else {
-      key = 'mission-result-success';
-    }
-
-    int value = await LocalStorageManager.getLocaleStorageData(key);
-    LocalStorageManager.setLocaleStorageData(key, value + 1);
-
-    int test = value + 1;
-    debugPrint('save mission result');
-    debugPrint(test.toString());
-
-    int missionNumber =
-        await LocalStorageManager.getLocaleStorageData('mission-number', 1);
-    LocalStorageManager.setLocaleStorageData('mission-number', missionNumber + 1);
+    this.missions.add((this.result[0] >= widget.failNumber) ? 's' : 'r');
+    LocalStorageManager.setListLocaleStorageData('missions', this.missions);
   }
 
   @override

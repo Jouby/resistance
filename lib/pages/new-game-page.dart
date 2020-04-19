@@ -21,6 +21,9 @@ class _NewGamePageState extends State<NewGamePage> {
   Widget build(BuildContext context) {
     List<Widget> bodyStep;
 
+    precacheImage(new AssetImage('assets/images/card_resist.jpg'), context);
+    precacheImage(new AssetImage('assets/images/card_spy.jpg'), context);
+
     switch (step) {
       case 1:
         bodyStep = <Widget>[

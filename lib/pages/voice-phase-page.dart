@@ -75,9 +75,7 @@ class _VoicePhasePageState extends State<VoicePhasePage> {
         child: Text('NEXT'),
         elevation: PageBuilder.elevationButton,
         onPressed: () {
-          LocalStorageManager.setLocaleStorageData('mission-number', 1);
-          LocalStorageManager.setLocaleStorageData('mission-result-fail', 0);
-          LocalStorageManager.setLocaleStorageData('mission-result-success', 0);
+          LocalStorageManager.setListLocaleStorageData('missions', List<String>());
 
           Navigator.push(
             context,

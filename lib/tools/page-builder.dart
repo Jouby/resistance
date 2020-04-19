@@ -33,7 +33,7 @@ abstract class PageBuilder extends StatelessWidget {
           ),
           child: SafeArea(
               child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: alignment,
             children: body,
           ))),
     );

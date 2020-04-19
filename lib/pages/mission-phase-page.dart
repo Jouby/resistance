@@ -15,27 +15,24 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
   int rejectedCount = 5;
   int participantNumber;
   int failNumber;
+  List<String> missions = [];
   Map<String, int> missionResult = {"fail": 0, "success": 0};
 
-  int totalFail = 0;
-  int totalSuccess = 0;
-
   void getLocaleStorageData() async {
-    this.missionNumber = await LocalStorageManager.getLocaleStorageData('mission-number');
-    int playerCount = await LocalStorageManager.getLocaleStorageData('player-count');
-    this.totalFail = await LocalStorageManager.getLocaleStorageData('mission-result-fail');
-    this.totalSuccess =
-        await LocalStorageManager.getLocaleStorageData('mission-result-success');
+    int playerCount =
+        await LocalStorageManager.getLocaleStorageData('player-count');
+    this.missions =
+        await LocalStorageManager.getListLocaleStorageData('missions');
 
-    debugPrint('playerCount' + playerCount.toString());
-    Map<String, int> missionData = this.getMissionsData(playerCount);
+    setState(() {
+      this.missionNumber = missions.length + 1;
+      Map<String, int> missionData = this.getMissionsData(playerCount);
 
-    if (missionData != null) {
-      this.participantNumber = missionData['number'];
-      this.failNumber = missionData['fail'];
-    }
-
-    setState(() {});
+      if (missionData != null) {
+        this.participantNumber = missionData['number'];
+        this.failNumber = missionData['fail'];
+      }
+    });
   }
 
   @override
@@ -48,20 +45,22 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
   Widget build(BuildContext context) {
     List<Widget> bodyStep;
 
-    debugPrint('fail' + this.totalFail.toString());
-    debugPrint('success' + this.totalSuccess.toString());
-
-    if (this.totalFail >= 3) {
+    if (this.missions.where((mission) => mission == 's').length >= 3) {
       return this.getStepWin(0);
-    } else if (this.totalSuccess >= 3) {
+    } else if (this.missions.where((mission) => mission == 'r').length >= 3) {
       return this.getStepWin(1);
     }
-
     if (this.rejectedCount <= 0) {
       return this.getStepWin(0);
     }
 
     bodyStep = <Widget>[
+      SizedBox(
+        height: 100.0,
+        child: Stack(
+          children: this.fillScoreStackImages()
+        ),
+      ),
       new Center(
           child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -87,43 +86,72 @@ class _MissionPhasePageState extends State<MissionPhasePage> {
               ),
             ]),
           ),
-
-          //TODO play a card ??
           PageBuilder.buildText('1. Le meneur constitue une équipe'),
           PageBuilder.buildText(
               '2. Une fois l\'équipe composée, on passe à l\'étape des votes.'),
           PageBuilder.buildText('3. Résultats des votes :'),
-          new RaisedButton(
-            child: Text('EQUIPE ACCEPTEE'),
-            color: Colors.green[400],
-            elevation: PageBuilder.elevationButton,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => VotePhasePage(
-                        failNumber: this.failNumber,
-                        participantNumber: this.participantNumber)),
-              );
-            },
+          SizedBox(
+            width: 250,
+            child: RaisedButton(
+              child: Text('EQUIPE ACCEPTEE'),
+              color: Colors.green[400],
+              elevation: PageBuilder.elevationButton,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VotePhasePage(
+                          failNumber: this.failNumber,
+                          participantNumber: this.participantNumber)),
+                );
+              },
+            ),
           ),
-          new RaisedButton(
-            child: Text('EQUIPE REJETEE (plus que $rejectedCount)'),
-            color: Colors.red[700],
-            elevation: PageBuilder.elevationButton,
-            onPressed: () {
-              setState(() {
-                this.rejectedCount--;
-              });
-            },
+          SizedBox(
+            width: 250,
+            child: RaisedButton(
+              child: Text('EQUIPE REJETEE (plus que $rejectedCount)'),
+              color: Colors.red[700],
+              elevation: PageBuilder.elevationButton,
+              onPressed: () {
+                setState(() {
+                  this.rejectedCount--;
+                });
+              },
+            ),
           ),
         ],
       )),
-      new Row()
+      Row()
     ];
 
     return PageBuilder.buildPage(
         context, bodyStep, 'mission.jpg', MainAxisAlignment.spaceBetween);
+  }
+
+  List<Widget> fillScoreStackImages() {
+    List<Widget> list = [];
+    List<String> imageList = ['empty'];
+
+    String prefix = '';
+    for (String mission in this.missions) {
+      imageList.add(prefix + mission);
+      prefix += 'x';
+    }
+
+    for (String image in imageList) {
+      list.add(Positioned.fill(
+        child: Container(
+          child: ClipRRect(
+            child: Image.asset(
+              'assets/images/score/$image.png',
+            ),
+          ),
+        ),
+      ));
+    }
+
+    return list;
   }
 
   Widget getStepWin(int winSide) {
